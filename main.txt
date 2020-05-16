@@ -1,0 +1,57 @@
+// Header files
+#include <stdio.h>
+#include "mbed.h"
+#include "TextLCD.h"
+#include "Keypad.h"
+
+// Serial connection with GSM Module:
+Serial pc(PTE0, PTE1); // PTE0-Tx and PTE1-Rx
+// Input pins to IR sensor:
+DigitalIn R1(PTD0);// Entry sensor DigitalIn R2(PTD2);// Exit sensor
+// LCD pin connections:
+TextLCD lcd(PTA1,PTA2,PTD4,PTA12,PTA4,PTA5, TextLCD::LCD16x2); // Rs, E, d4, d5, d6, d7
+// Variable Declarations:
+char templ[4]; int cnt; char gsmf1;
+
+// Delay function:
+void delay()
+{ long i,j; for(i=0; i<10000000; i++) { j=i/10; j=j/2;
+}
+}
+// Delay function:
+void delay2()
+{ long i,j;
+for(i=0; i<50000000; i++) { j=i/10; j=j/2;
+}
+}
+
+// Main Function int main()
+{
+// setting the baud rate to 9600:
+pc.baud(9600);
+
+// Print characters on LCD: lcd.locate(0,0); lcd.printf("TRAFFIC "); lcd.locate(0,1);
+lcd.printf("INTENSITY: ");
+// send AT commands to test the status of network:
+pc.printf("AT"); delay2(); pc.putc(13); pc.putc(10);
+pc.printf("AT+CMGF=1"); delay2(); pc.putc(13); pc.putc(10);
+while(1) {
+// Increment or decrement the counter depending on the input from IR sensors: if(R1==1) { if(cnt<50) cnt=cnt+1; delay();
+}
+if(R2==1) { if(cnt>0) cnt=cnt-1; delay();
+}
+// Print the value of traffic intensity on the LCD:
+templ[0]=(cnt / 100) ; templ[1]=((cnt - (templ[0]*100))/10); templ[2]=(cnt - (templ[1]*10)- (templ[0]*100)) + 0x30; templ[0]=templ[0]+0x30; templ[1]=templ[1]+0x30;
+lcd.locate(13,1); lcd.putc(templ[0]); lcd.putc(templ[1]); lcd.putc(templ[2]);
+// if count is less than 5: Display traffic intensity less if (cnt<=5){ lcd.locate(12,0); lcd.printf("LESS");
+}
+// if count is greater than 5: Display traffic intensity high and send SMS if(cnt>5) { if(gsmf1==0) { lcd.locate(12,0); lcd.printf("HIGH"); pc.printf("AT+CMGS=\"4389294294\""); delay2(); pc.putc(13); pc.putc(10); delay2(); pc.printf("High Traffic"); delay2(); pc.putc(26); delay2(); gsmf1=1;
+}
+} else
+{
+    gsmf1='0';
+
+}
+delay();
+} // while (1)
+} //main
