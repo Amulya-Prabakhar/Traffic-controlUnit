@@ -6,7 +6,7 @@ Author Details:
 Amulya Prabakhar, MEng in Electrical and Computer Engineeering, Concordia Universty, Montreal, Canada
 Nishanth Tamalla, MEng in Electrical and Computer Engineeering, Concordia Universty, Montreal, Canada
 Sibi Ravichandran, MEng in Electrical and Computer Engineeering, Concordia Universty, Montreal, Canada
-Vivekchari, MEng in Electrical and Computer Engineeering, Concordia Universty, Montreal, Canada
+Gaurav, MEng in Electrical and Computer Engineeering, Concordia Universty, Montreal, Canada
 
 Description:
 Academic Project of Microprocessor Project. The main aim of this project is to monitor the traffic intensity of a road segment depending on which the microprocessor takes the decision and reports the traffic status to emergency (911) systems via SMS. The system also displays the status of the traffic in a
